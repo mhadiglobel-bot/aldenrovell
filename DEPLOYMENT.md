@@ -62,3 +62,22 @@ npm run dev
 - `Could not place order`: verify a published product's approved flags and stock, COD settings, SQL function grants, and SQL Editor migration.
 - `Notification not configured`: complete Resend setup; keep using dashboard while it is missing.
 - Site intentionally `noindex`: leave until approved production launch, then configure domain and `NEXT_PUBLIC_STORE_LIVE=true`.
+
+## V1.1 TypeScript validation build fix (October 2026)
+
+The original V1 checkout validation produced Vercel's `src/lib/validate.ts`
+TypeScript error (`t.quantity is of type unknown`) during `next build`.
+V1.1 fixes this by checking JSON input types before comparing quantities.
+
+If your GitHub repository is already linked to Vercel, **do not make another
+repository or Vercel project**. In GitHub open `src/lib/validate.ts`,
+choose Edit (pencil), replace its contents with this package's corrected file,
+and commit to the linked production branch (usually `main`). Vercel should
+start a new deployment automatically. Alternatively update your repository
+with the contents of this ZIP (not the ZIP file itself).
+
+You can deploy the store preview with no Supabase environment variables;
+checkout intentionally does not accept real orders until Supabase, accurate
+product settings, shipping fee and COD have been configured. Empty API keys
+are not usable secrets. Add real keys only to Vercel's Environment Variables;
+redeploy after modifying them.

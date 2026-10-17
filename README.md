@@ -1,3 +1,5 @@
+**V1.1 update:** Fixed TypeScript validation error in `src/lib/validate.ts` that blocked Vercel builds in V1. See `DEPLOYMENT.md`. Full Next.js build still requires a dependency installation and must be verified on Vercel.
+
 # ALDEN ROVELL | Premium Multi-Category Store
 
 A mobile-first Next.js / TypeScript / Tailwind store starter prepared from the owner's October 2026 logo and product handoff PDFs. Built for GitHub + Vercel and a Pakistan-focused Cash on Delivery (COD) workflow.

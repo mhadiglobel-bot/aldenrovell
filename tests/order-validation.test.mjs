@@ -9,3 +9,14 @@ test('rejects duplicate cart lines',()=>{assert.equal(validateOrderPayload({...v
 test('rejects negative, fractional and excessive quantities',()=>{for(const q of [-1,0,1.5,11])assert.equal(validateOrderPayload({...valid,items:[{id:'P01',quantity:q}]}).ok,false);});
 test('rejects unrecognized IDs and missing order token',()=>{assert.equal(validateOrderPayload({...valid,items:[{id:'P99',quantity:1}]}).ok,false);assert.equal(validateOrderPayload({...valid,idempotencyKey:'123'}).ok,false);});
 test('normalizes allowed spaces in phone before database validation',()=>{const result=validateOrderPayload({...valid,customer:{...valid.customer,phone:'0300 1234567'}});assert.equal(result.ok,true);if(result.ok)assert.equal(result.value.customer.phone,'03001234567');});
+
+test('rejects malformed and non-numeric cart quantities without throwing',()=>{
+ for(const quantity of [null,'2',undefined,{},[],true]){
+  assert.equal(validateOrderPayload({...valid,items:[{id:'P01',quantity}]}).ok,false);
+ }
+});
+test('rejects non-object cart entries without throwing',()=>{
+ for(const entry of [null,undefined,5,'bad',[]]){
+  assert.equal(validateOrderPayload({...valid,items:[entry]}).ok,false);
+ }
+});
