@@ -1,0 +1,1 @@
+import Image from 'next/image';export default function Loading(){return <div className="page-loader" role="status" aria-label="Loading Alden Rovell"><Image src="/brand/symbol-transparent.png" alt="" width={90} height={90} className="loader-symbol"/><span>ALDEN ROVELL</span><div className="loader-line"/></div>}

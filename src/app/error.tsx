@@ -1,0 +1,1 @@
+'use client';export default function ErrorPage({reset}:{error:Error;reset:()=>void}){return <div className="container empty-panel page-404"><h2>Something didn&apos;t load.</h2><p>Check your connection and try again.</p><button className="btn btn-dark" onClick={()=>reset()}>Try again</button></div>}

@@ -1,0 +1,4 @@
+import {Suspense} from 'react';import {getProducts}from '@/lib/store';import {ShopExplorer} from '@/components/shop-explorer';
+export const dynamic='force-dynamic';
+export const metadata={title:'Shop the Collection',description:'Browse Alden Rovell lifestyle, accessories and footwear previews.'};
+export default async function Shop(){const products=await getProducts();return <div className="container standard-page"><div className="eyebrow">THE COMPLETE EDIT / 2026</div><div className="collection-heading"><h1 className="page-title">The collection<span className="heading-dot">.</span></h1><p>Discover a growing universe of considered objects. Beautiful details, simple browsing.</p></div><Suspense fallback={<p>Loading collection…</p>}><ShopExplorer products={products}/></Suspense><p className="collection-disclaimer">Listings shown as previews until image accuracy, availability and prices are verified. No unconfirmed orders are accepted.</p></div>}

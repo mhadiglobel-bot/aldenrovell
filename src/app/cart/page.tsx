@@ -1,0 +1,1 @@
+import {getProducts,getSettings} from '@/lib/store';import {CartView}from '@/components/cart-view';export const dynamic='force-dynamic';export const metadata={title:'Your Bag',robots:{index:false}};export default async function Cart(){const [p,s]=await Promise.all([getProducts(),getSettings()]);return <CartView products={p} settings={s}/>}

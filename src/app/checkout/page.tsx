@@ -1,0 +1,1 @@
+import {getProducts,getSettings} from '@/lib/store';import {CheckoutView}from '@/components/checkout-view';export const dynamic='force-dynamic';export const metadata={title:'Checkout',robots:{index:false}};export default async function Checkout(){const [p,s]=await Promise.all([getProducts(),getSettings()]);return <CheckoutView products={p} settings={s}/>}
