@@ -1,105 +1,73 @@
-**V1.1 update:** Fixed TypeScript validation error in `src/lib/validate.ts` that blocked Vercel builds in V1. See `DEPLOYMENT.md`. Full Next.js build still requires a dependency installation and must be verified on Vercel.
+# ORBIT — Beyond the Known
 
-# ALDEN ROVELL | Premium Multi-Category Store
+**An original, interactive, multi-page cinematic space website.**
 
-A mobile-first Next.js / TypeScript / Tailwind store starter prepared from the owner's October 2026 logo and product handoff PDFs. Built for GitHub + Vercel and a Pakistan-focused Cash on Delivery (COD) workflow.
+A self-contained static project designed for direct deployment on Vercel through GitHub. It uses real WebGL planet shaders, procedural illustration assets, animated starfields, responsive page layouts and accessible interactive controls. No Node modules, API keys, environment variables, databases or external hosting services are needed for the website to work.
 
-**IMPORTANT: This package is a staging-ready source project, NOT a verified live store.** The four imported product groups and their visual concepts are unapproved drafts. COD checkout intentionally stays disabled until products are verified and the owner configures Supabase + shipping. We do not invent prices, stock, delivery fees, Gmail addresses, courier arrangements, or product claims.
+## Pages
 
-## What's inside
+| Page | Route | Interaction |
+| --- | --- | --- |
+| Experience | `/` | WebGL rotating planet, animated entry, scroll-driven movement, interactive editorial sections |
+| Worlds | `/worlds` | Filterable five-world catalog |
+| Aurelia | `/worlds/aurelia` | 3D gas giant, view modes, immersive drag-to-rotate |
+| Pelagia | `/worlds/pelagia` | 3D ocean world, view modes, immersive drag-to-rotate |
+| Vespera | `/worlds/vespera` | 3D ice world, view modes, immersive drag-to-rotate |
+| Ignis | `/worlds/ignis` | 3D volcanic world, view modes, immersive drag-to-rotate |
+| Noctis | `/worlds/noctis` | 3D dark giant, view modes, immersive drag-to-rotate |
+| Missions | `/missions` | Expandable mission log |
+| Technology | `/technology` | Switchable visualization systems |
+| About | `/about` | Editorial brand story |
+| Contact | `/contact` | Validated local transmission composer (copies text, NO backend) |
 
-- Premium home page, collection and category filters, product detail galleries, cart, checkout and receipt QR design.
-- Search and alphabetical sorting, responsive mobile navigation and image grids, subtle CSS motion with reduced-motion support.
-- About, Contact, FAQ, Shipping, 7-Day Returns, preliminary Terms and Privacy pages.
-- **Secure server-backed COD order requests** (activation requires Supabase) with server-calculated totals, order references, idempotency, stock reservations, status updates and stock-restoring cancellations.
-- Protected admin dashboard: verify images and sellable units, enter price/stock, publish, manage shipping/COD, read orders, change status.
-- Optional Resend-to-Gmail **owner order notifications**, if configured; the orders database remains the source of truth.
-- Customer order-reference QR shown on success. This is **not a payment, shipping, or WhatsApp QR**.
-- Product images: 20 optimized WebP images from the embedded PDF asset ZIP, plus 7 extracted brand PNGs. The full original draft catalog and reference-image previews live under `assets-review/`.
+## Deploy from ZIP to GitHub to Vercel
 
-## 1. Local quick start
+1. **Unzip** `ORBIT_CINEMATIC_WEBSITE.zip` on your computer.
+2. Create a new **GitHub repository**, for example `orbit-cinematic`.
+3. On GitHub, click **Add file → Upload files**. Upload **all the contents inside** the extracted `ORBIT_CINEMATIC_WEBSITE` folder (not the parent folder). Make sure `index.html` and `vercel.json` are visible at repository root. Do not upload the ZIP itself.
+4. Commit the files to the `main` branch.
+5. In **Vercel → Add New → Project**, import that GitHub repository.
+6. Settings: **Framework Preset = Other**, **Root Directory = `./`**, **Build Command = blank**, **Output Directory = `.`**. (The included `vercel.json` also sets these static-site defaults.)
+7. Click **Deploy**. Open the resulting `.vercel.app` URL. Test direct routes such as `/worlds/pelagia` as well as the homepage.
 
-Requires **Node.js 20.9+** (Node 22 is recommended) and npm.
+You do **not** need `npm install` or a `package.json`. This is intentional: the project is a compact, dependency-free native WebGL and ES modules website, so there is no missing npm package to block deployment. **A network connection is only used to optionally retrieve Google Fonts; a rounded system-font stack is provided as fallback.**
+
+## Run locally
+
+Use a development server so ES modules load normally; opening `index.html` directly from `file://` is not recommended.
 
 ```bash
-npm install
-npm run dev
+cd ORBIT_CINEMATIC_WEBSITE
+python -m http.server 4173
 ```
 
-Open http://localhost:3000. Without any environment variables, the 4-item catalog displays in **preview mode**, and protected order/admin backend functions are OFF. That is intentional. `npm run build` works only after dependencies are installed. The product images and logos are packaged locally.
+Then open `http://localhost:4173`.
 
-Quality commands:
+## Features
 
-```bash
-npm run typecheck
-npm run lint
-npm test
-npm run build
-```
+- Original WebGL fragment shader with procedural sphere shading, animated banding, atmosphere and multiple ring passes.
+- Interactive planet rotation in fullscreen explorer mode; world-specific palettes, atmosphere and orbit views.
+- Animated Canvas2D starfields, pointer parallax, scroll interpolation, responsive navigation and optional synthesised ambient sound (off by default).
+- Responsive rounded-radius components throughout, rounded typography (Outfit / Manrope with local system fallbacks).
+- Prefers-reduced-motion support, keyboard shortcuts (**Ctrl/⌘ + K**) for quick navigation, focus-visible styles, semantic headings and accessible interactive controls.
+- No third-party analytics, trackers, external API or invented functional backend.
 
-See `DEPLOYMENT.md` for step-by-step GitHub/Vercel and Supabase setup. See `OWNER_APPROVAL_CHECKLIST.md` for launch blockers.
+## Important information
 
-## 2. Operating model
+- **This is a fictional ORBIT brand and speculative sci-fi concept.** Planet names, world descriptions, statistics, mission dates and lore are invented for the artistic experience—not factual astronomy data or real missions.
+- **Contact:** The form validates fields and copies the composed message to the clipboard; it does not send or store messages. Connect your own secure form backend before using this as a real contact channel.
+- **Fonts:** Google Fonts are optional. The visual experience remains functional without them.
+- **Graphics:** WebGL is required for animated shader planets. Static illustrated planet fallback is included for devices without WebGL.
+- **No licensing issue with bundled planet illustrations:** They were generated programmatically for this project. The logo, writing, layouts and shader code are original for ORBIT.
 
-**Customer checkout:** Customer chooses a published product, adds it to the persistent bag, enters Pakistani mobile number and address, acknowledges confirmation policy, and submits a COD request. The server revalidates input, and a protected PostgreSQL SQL function checks store settings, prices, availability and stock while writing the order. The response contains only the reference, total, shipping fee and confirmation status. A QR receipt is generated in the browser. The owner must personally confirm and fulfill requests.
+## Customize
 
-**No database = no order:** The endpoint returns an explicit 503. The app does not pretend to accept orders, send WhatsApp messages, or permanently store orders in browser local storage.
+- Brand name, links and navigation: `assets/js/app.js`
+- Worlds, colors, data and mission lore: `assets/js/data.js`
+- Page content: `assets/js/pages/`
+- Responsive visuals, radii, typography: `assets/css/style.css`
+- WebGL rendering, camera behavior: `assets/js/scene.js`
+- Star particles: `assets/js/stars.js`
+- Optional sound: `assets/js/audio.js`
 
-**Notifications:** After successful order creation, a best-effort Resend email can notify `ORDER_NOTIFY_EMAIL` (this can be the owner's actual Gmail). Resend requires its own account/API key and verified sender. Notifications cannot be guaranteed, so **review the admin order dashboard** even if email is configured. Never store secrets in client source.
-
-**Order stock:** Units are reserved when an order is created; an admin cancellation restores them. Check stale pending orders regularly and decide how to handle abandoned order requests. No automatic expiry in this version.
-
-**Product approval:** Four products all start `is_published=false`, `images_approved=false` and `sales_unit_verified=false`, with null prices/stock. Confirm real sample photos, contents, variants, sellable quantity and public copy before enabling controls. Current admin models only **one sellable SKU per product**, so size-dependent sandals and ring variants require a variant inventory upgrade before selling those as separate options.
-
-## 3. Key files
-
-| Path | Purpose |
-| --- | --- |
-| `src/app/page.tsx` | Editorial home and categories |
-| `src/app/shop/page.tsx` | Shop listing |
-| `src/components/shop-explorer.tsx` | Search/filter/sort |
-| `src/components/product-detail.tsx` | Image gallery and product details |
-| `src/components/cart-provider.tsx` | Browser cart persistence |
-| `src/components/checkout-view.tsx` | COD request UX and reference QR |
-| `src/app/api/orders/route.ts` | Server-side checkout/notifications |
-| `src/components/admin-console.tsx` | Admin interface |
-| `src/app/api/admin/` | Protected admin endpoints |
-| `src/lib/store.ts` | Service role / Auth / catalog access |
-| `supabase/schema.sql` | PostgreSQL schema and atomic procedures |
-| `src/data/catalog.json` | Four provisional products from the PDF |
-| `public/products/` | 20 optimized concept images |
-| `public/brand/` | Supplied 7 logo assets |
-| `assets-review/` | Original catalog data and review references |
-| `.env.example` | Required and optional configuration variable names |
-
-## 4. Design and source integrity
-
-The selected starting colors come from the logo guide: red/oxblood with charcoal and warm neutral backgrounds. This is a **proposed working theme**, not proof of final approval. Product source PDF makes clear that the 20 images are AI-assisted concept renderings requiring sample review. Do not make unsupported material, performance or medical claims.
-
-Logo mapping:
-- Header: `primary-logo.png`
-- Loading state and favicon: `symbol-transparent.png`
-- Home editorial brand panel: `profile-dark.png`
-- About: `stacked-logo.png`
-- Footer: `monochrome-logo.png`
-- Supplied optional campaign assets: `wide-banner.png`, `landscape-cover.png`
-
-## 5. Safety before public launch
-
-- Approve final legal policies and business contact Gmail/number.
-- Verify product photography, stock, prices, variants and specifications.
-- Verify actual COD/courier coverage and fees; test checkout with an authorized noncustomer test order first.
-- Install protections against automated spam/orders (e.g. managed WAF and CAPTCHA with server verification) before a widely promoted public launch. Current order endpoint performs strict validation but is **not rate-limited**.
-- Do not include service-role secrets in public GitHub, `NEXT_PUBLIC_` variables, screenshots, or chat.
-- Evaluate order retention, cancellation/refund, privacy and legal compliance with local advisors.
-- Enable live indexing only when the site is approved by setting `NEXT_PUBLIC_STORE_LIVE=true`; until then the app sets noindex/robots disallow.
-
-## Verified here (2026-10-17)
-
-- Source PDFs parsed and embedded catalog assets extracted.
-- 7 logo resources and 20 product WebP resources written to source.
-- `npm test`: 7 / 7 input validation unit tests passed (Node 22).
-- TypeScript syntax parsing: 0 parse errors across source files.
-- **Not tested:** `npm install`, `npm run build`, `npm run typecheck`, `npm run lint`, browser/mobile screenshots and actual Supabase/Resend/deployment integration. External npm registry could not be accessed in this build environment. Run checks above on a connected machine or Vercel.
-
-Copyright: Use only owner-authorized logo and product artwork. Commercial usage rights for external supplier/source content must be confirmed.
+See `docs/ARCHITECTURE.md` for implementation details.
