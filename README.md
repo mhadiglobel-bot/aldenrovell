@@ -1,73 +1,57 @@
-# ORBIT — Beyond the Known
+# CHRONOS — The Art of Time (V2 / 3D Edition)
 
-**An original, interactive, multi-page cinematic space website.**
+**A multi-page, dark-luxury watch website with true browser-rendered 3D, scroll-linked exploded watch engineering, rounded Sora + Nunito Sans typography and a live finish configurator.**
 
-A self-contained static project designed for direct deployment on Vercel through GitHub. It uses real WebGL planet shaders, procedural illustration assets, animated starfields, responsive page layouts and accessible interactive controls. No Node modules, API keys, environment variables, databases or external hosting services are needed for the website to work.
+This is a creative demo featuring a **fictional watch brand and original procedural model**, not a store selling actual products.
 
-## Pages
+## Routes
 
-| Page | Route | Interaction |
-| --- | --- | --- |
-| Experience | `/` | WebGL rotating planet, animated entry, scroll-driven movement, interactive editorial sections |
-| Worlds | `/worlds` | Filterable five-world catalog |
-| Aurelia | `/worlds/aurelia` | 3D gas giant, view modes, immersive drag-to-rotate |
-| Pelagia | `/worlds/pelagia` | 3D ocean world, view modes, immersive drag-to-rotate |
-| Vespera | `/worlds/vespera` | 3D ice world, view modes, immersive drag-to-rotate |
-| Ignis | `/worlds/ignis` | 3D volcanic world, view modes, immersive drag-to-rotate |
-| Noctis | `/worlds/noctis` | 3D dark giant, view modes, immersive drag-to-rotate |
-| Missions | `/missions` | Expandable mission log |
-| Technology | `/technology` | Switchable visualization systems |
-| About | `/about` | Editorial brand story |
-| Contact | `/contact` | Validated local transmission composer (copies text, NO backend) |
+| Route | Content |
+|---|---|
+| `/` | Cinematic 3D hero, 4-chapter mechanical scroll story, collection, craft and journal sections |
+| `/timepiece` | Interactive real-time 3D watch inspector, rotate, zoom, explode/reassemble and finish changes |
+| `/collections` | Three watch finishes with functional navigation into the inspector |
+| `/craft` | Accordion-based craft story and technical detail |
+| `/journal` | Editorial index |
+| `/journal/the-weight-of-a-second` | Full article |
+| `/journal/under-the-crystal` | Full article |
+| `/journal/objects-that-remain` | Full article |
+| `/contact` | Form that prepares a copyable brief (no network submission) |
 
-## Deploy from ZIP to GitHub to Vercel
+## What makes the model 3D?
 
-1. **Unzip** `ORBIT_CINEMATIC_WEBSITE.zip` on your computer.
-2. Create a new **GitHub repository**, for example `orbit-cinematic`.
-3. On GitHub, click **Add file → Upload files**. Upload **all the contents inside** the extracted `ORBIT_CINEMATIC_WEBSITE` folder (not the parent folder). Make sure `index.html` and `vercel.json` are visible at repository root. Do not upload the ZIP itself.
-4. Commit the files to the `main` branch.
-5. In **Vercel → Add New → Project**, import that GitHub repository.
-6. Settings: **Framework Preset = Other**, **Root Directory = `./`**, **Build Command = blank**, **Output Directory = `.`**. (The included `vercel.json` also sets these static-site defaults.)
-7. Click **Deploy**. Open the resulting `.vercel.app` URL. Test direct routes such as `/worlds/pelagia` as well as the homepage.
+The watch is created at runtime from actual Three.js geometry: independent extruded straps, case, bezel, sapphire study, textured dial, physical hands, crown and individual animated gear wheels. Scrolling through the homepage moves the components into 3D depth and returns them to their original positions. This is not a sequence of static images or a 2D Canvas drawing.
 
-You do **not** need `npm install` or a `package.json`. This is intentional: the project is a compact, dependency-free native WebGL and ES modules website, so there is no missing npm package to block deployment. **A network connection is only used to optionally retrieve Google Fonts; a rounded system-font stack is provided as fallback.**
+## Rounded typography
 
-## Run locally
+The design uses `Sora` for editorial headings and `Nunito Sans` for body/UI. Both use geometric and softly rounded letterforms. Locally installed rounded/system fonts are used as backups if Google Fonts cannot load.
 
-Use a development server so ES modules load normally; opening `index.html` directly from `file://` is not recommended.
+## GitHub + Vercel deployment (no build command)
 
-```bash
-cd ORBIT_CINEMATIC_WEBSITE
-python -m http.server 4173
-```
+1. Unzip the archive on your computer.
+2. Open the `CHRONOS_V2_3D` folder and upload **everything inside it** to the root of a new GitHub repository. Keep `index.html` at the repo root, not inside an extra nested folder.
+3. On Vercel: **Add New > Project > Import Git Repository**.
+4. Framework Preset: **Other**.
+5. Build Command: **empty**. Output Directory: **`.` (project root)** if the UI requests a directory; otherwise leave default.
+6. Deploy. The `vercel.json` rewrite handles direct visits to nested routes.
 
-Then open `http://localhost:4173`.
+### External dependencies
 
-## Features
+- Three.js module version **0.180.0** from jsDelivr, with unpkg as fallback. Both are public CDNs.
+- Sora and Nunito Sans from Google Fonts, with local font fallbacks.
 
-- Original WebGL fragment shader with procedural sphere shading, animated banding, atmosphere and multiple ring passes.
-- Interactive planet rotation in fullscreen explorer mode; world-specific palettes, atmosphere and orbit views.
-- Animated Canvas2D starfields, pointer parallax, scroll interpolation, responsive navigation and optional synthesised ambient sound (off by default).
-- Responsive rounded-radius components throughout, rounded typography (Outfit / Manrope with local system fallbacks).
-- Prefers-reduced-motion support, keyboard shortcuts (**Ctrl/⌘ + K**) for quick navigation, focus-visible styles, semantic headings and accessible interactive controls.
-- No third-party analytics, trackers, external API or invented functional backend.
+A live internet connection is needed for the WebGL dependency. If the library or device WebGL is unavailable, an original local SVG watch illustration remains visible; text and navigation still function.
 
-## Important information
+## Accessibility & performance
 
-- **This is a fictional ORBIT brand and speculative sci-fi concept.** Planet names, world descriptions, statistics, mission dates and lore are invented for the artistic experience—not factual astronomy data or real missions.
-- **Contact:** The form validates fields and copies the composed message to the clipboard; it does not send or store messages. Connect your own secure form backend before using this as a real contact channel.
-- **Fonts:** Google Fonts are optional. The visual experience remains functional without them.
-- **Graphics:** WebGL is required for animated shader planets. Static illustrated planet fallback is included for devices without WebGL.
-- **No licensing issue with bundled planet illustrations:** They were generated programmatically for this project. The logo, writing, layouts and shader code are original for ORBIT.
+- Mobile navigation, keyboard focus indicators and semantic page headings.
+- Reduced motion preferences are respected.
+- WebGL render loops skip offscreen content. DPR is capped to reduce GPU load.
+- No logins, API keys, database or paid service required.
+- Only a small collection of source files, suitable for GitHub browser uploads.
 
-## Customize
+## Important demonstration limits
 
-- Brand name, links and navigation: `assets/js/app.js`
-- Worlds, colors, data and mission lore: `assets/js/data.js`
-- Page content: `assets/js/pages/`
-- Responsive visuals, radii, typography: `assets/css/style.css`
-- WebGL rendering, camera behavior: `assets/js/scene.js`
-- Star particles: `assets/js/stars.js`
-- Optional sound: `assets/js/audio.js`
-
-See `docs/ARCHITECTURE.md` for implementation details.
+- The watch collection, reference codes and material specifications are fictional concepts. Do not present them as manufactured product claims.
+- The contact form **does not send email**. It prepares a brief for manual copy/sharing.
+- Automated browser-based visual QA may be restricted by local security policy; verify WebGL behavior and mobile scroll on your deployed Vercel URL before treating it as production-ready.

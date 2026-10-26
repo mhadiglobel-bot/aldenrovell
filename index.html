@@ -3,33 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#070913" />
-  <meta name="description" content="ORBIT is an immersive, interactive journey across imagined worlds. Explore the extraordinary in a cinematic 3D universe." />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="ORBIT — The universe is yours to explore" />
-  <meta property="og:description" content="A cinematic, interactive exploration of extraordinary worlds." />
+  <meta name="theme-color" content="#090b0d" />
   <meta name="color-scheme" content="dark" />
+  <meta name="description" content="CHRONOS — The Art of Time. Explore a genuinely three-dimensional mechanical watch, its inner workings and three refined finishes through cinematic scroll interaction." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="CHRONOS — The Art of Time" />
+  <meta property="og:description" content="A scroll-driven luxury watch experience with real-time 3D depth, mechanical movement and elegant rounded typography." />
+  <meta property="og:image" content="/preview.png" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="manifest" href="/manifest.webmanifest" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/assets/css/style.css" />
-  <title>ORBIT — Beyond the Known</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="stylesheet" href="/src/style.css" />
+  <title>CHRONOS / The Art of Time</title>
 </head>
 <body>
   <div class="noise" aria-hidden="true"></div>
-  <div class="ambient-haze" aria-hidden="true"></div>
-  <canvas id="starfield" aria-hidden="true"></canvas>
-  <div id="planet-fallback" aria-hidden="true"></div>
-  <canvas id="space-scene" aria-hidden="true"></canvas>
-  <div class="scene-vignette" aria-hidden="true"></div>
-  <div id="scroll-progress" aria-hidden="true"></div>
+  <div id="progress-bar" aria-hidden="true"></div>
   <header id="site-header"></header>
   <main id="app" tabindex="-1"></main>
   <footer id="site-footer"></footer>
-  <div id="site-overlay"></div>
   <div id="toast" role="status" aria-live="polite"></div>
-  <script type="module" src="/assets/js/app.js"></script>
+  <script type="module" src="/src/main.js"></script>
 </body>
 </html>
