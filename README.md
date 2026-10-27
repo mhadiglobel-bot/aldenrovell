@@ -1,57 +1,166 @@
-# CHRONOS — The Art of Time (V2 / 3D Edition)
+# AUDIXO V58 — Open Studio Vocal FX Upgrade
 
-**A multi-page, dark-luxury watch website with true browser-rendered 3D, scroll-linked exploded watch engineering, rounded Sora + Nunito Sans typography and a live finish configurator.**
+> This is an in-place update of the **V57 99-file repository**. No website-wide redesign. Updated **Open Studio effects/presets** and the **site header scroll behavior** only. All other application modules are retained from V57.
 
-This is a creative demo featuring a **fictional watch brand and original procedural model**, not a store selling actual products.
+## Studio V58 changes
 
-## Routes
+- **Vocal Aura / Reverb (Space):** a filtered diffuse stereo reverb with adjustable **Wet 0–100%**, **Room Depth**, and **Air**. Unlike discrete echo taps, it does not rhythmically repeat words. At 100% wet the direct dry channel is muted, by design.
+- **Tone / Vocal Polish:** real frequency-shaping filters for **Voice Warmth**, **Metallic/Harsh Edge Reduction**, and optional **Low-rumble Cleanup**. These controls reduce harshness; they are not magical instrument removal. To remove percussion/metal hits that are mixed into a finished song, isolate a vocal stem first.
+- **Echo:** separate **Smart Pauses** and **Continuous** modes. Smart Pauses detects sustained low-energy gaps and sends only a short part of the phrase ending through **1–5 finite delay taps**. Controls: pause sensitivity (250–1200 ms), echo timing, real wet send (0–100%), repeat decay, and classic/ping-pong/wide mode. Short pauses between words are ignored by default. Detection is amplitude-based, not lyrics transcription; drums or music behind vocals may hide pauses. Best results on a clean vocal stem.
+- **Refreshed presets:** Vocal Aura, Deep Clean Voice, Silky Hall, Phrase Trail, Soft Pause Echo, Bass + Smooth Voice; adjusted several old vocal presets to minimize metallic or over-repeated sound.
+- **Navigation:** top page menu is no longer sticky; it scrolls out of view, avoiding overlap with studio controls.
+- **Preview / Export:** both paths use the same Web Audio effects graph, and output tails are extended when reverb or repeats are active.
 
-| Route | Content |
-|---|---|
-| `/` | Cinematic 3D hero, 4-chapter mechanical scroll story, collection, craft and journal sections |
-| `/timepiece` | Interactive real-time 3D watch inspector, rotate, zoom, explode/reassemble and finish changes |
-| `/collections` | Three watch finishes with functional navigation into the inspector |
-| `/craft` | Accordion-based craft story and technical detail |
-| `/journal` | Editorial index |
-| `/journal/the-weight-of-a-second` | Full article |
-| `/journal/under-the-crystal` | Full article |
-| `/journal/objects-that-remain` | Full article |
-| `/contact` | Form that prepares a copyable brief (no network submission) |
+## Important scope and honest limitations
 
-## What makes the model 3D?
+This V58 package does **not** change or repair the separate YouTube MP3/MP4 converter backend from V57. That feature may still require the worker or a supported alternative; the Studio audio editor itself processes imported files locally in the browser. Nothing here claims to fix the prior converter connection error. Likewise, smart pause detection is a useful heuristic, not an automatic understanding of lyrics and music.
 
-The watch is created at runtime from actual Three.js geometry: independent extruded straps, case, bezel, sapphire study, textured dial, physical hands, crown and individual animated gear wheels. Scrolling through the homepage moves the components into 3D depth and returns them to their original positions. This is not a sequence of static images or a 2D Canvas drawing.
+**To upload:** extract this ZIP and upload its *contents* (not the ZIP itself) to the GitHub repository preserving directory paths. Use your existing Vercel Git integration and deploy the updated commit. Only 99 source files are included, with no cookies or private tokens.
 
-## Rounded typography
+## Suggested Studio acceptance tests after Vercel deployment
 
-The design uses `Sora` for editorial headings and `Nunito Sans` for body/UI. Both use geometric and softly rounded letterforms. Locally installed rounded/system fonts are used as backups if Google Fonts cannot load.
+1. Import a short **voice-only** MP3 or WAV into Open Studio and select the waveform.
+2. Use **Presets → Vocal Aura → Apply**. Preview. In **Space**, change Reverb Wet 0 → 50 → 100%; it must be audibly different and 100% must be fully wet.
+3. Use **Tone** and vary Vocal Warmth / Metallic Tame. Compare the unprocessed audio through Undo. Frequency shaping will affect the whole mix if vocals and drums are not separated.
+4. Go to **Echo → Smart pauses**, turn on Echo if necessary, and observe the real pause-point count. Set minimum pause to 450 ms and 3 taps. Preview. Use clean vocal audio with gaps to verify trailing words, not every syllable, are echoed.
+5. Switch to **Continuous** and verify whole-track echoes are different. Turn echoes off in **Space** if you want only non-repeating ambience.
+6. Verify fades, 8D/16D Motion, and WAV/MP3 export using your existing browser editor controls. Play exported file and check the tail is preserved.
+7. Scroll on Open Studio and other pages: the global navigation should leave the viewport rather than remain sticky.
 
-## GitHub + Vercel deployment (no build command)
+**Validation performed for this package:** 64 TS/TSX files passed parser syntax checks; the audio engine, project and edit-rack modules passed isolated TypeScript compilation; 10 mocked Web Audio graph assertions passed; ZIP entry count and CRC are checked. A full dependency-install/build and real browser audition could not be completed in this environment, so test the above after deployment before treating the sound as production-certified.
 
-1. Unzip the archive on your computer.
-2. Open the `CHRONOS_V2_3D` folder and upload **everything inside it** to the root of a new GitHub repository. Keep `index.html` at the repo root, not inside an extra nested folder.
-3. On Vercel: **Add New > Project > Import Git Repository**.
-4. Framework Preset: **Other**.
-5. Build Command: **empty**. Output Directory: **`.` (project root)** if the UI requests a directory; otherwise leave default.
-6. Deploy. The `vercel.json` rewrite handles direct visits to nested routes.
+---
 
-### External dependencies
+## Original V57 website + private MP3/MP4 worker (unchanged)
 
-- Three.js module version **0.180.0** from jsDelivr, with unpkg as fallback. Both are public CDNs.
-- Sora and Nunito Sans from Google Fonts, with local font fallbacks.
+**ONE GitHub repository · 99 source files · no cookies or private tokens in GitHub.**
 
-A live internet connection is needed for the WebGL dependency. If the library or device WebGL is unavailable, an original local SVG watch illustration remains visible; text and navigation still function.
+This package combines the previously separate AUDIXO V56 website and media-worker projects. It fixes the large-file download architecture and provides an optional, ready-to-connect Render deployment blueprint. The screenshot's **"processing worker is offline or not configured"** error is a deployment/configuration error: source code cannot start a worker on Vercel automatically.
 
-## Accessibility & performance
+## 1. What runs where?
 
-- Mobile navigation, keyboard focus indicators and semantic page headings.
-- Reduced motion preferences are respected.
-- WebGL render loops skip offscreen content. DPR is capped to reduce GPU load.
-- No logins, API keys, database or paid service required.
-- Only a small collection of source files, suitable for GitHub browser uploads.
+| Component | Location in this same repo | Runs on | Purpose |
+| --- | --- | --- | --- |
+| Website (React/Vite) + private API proxy | `src/`, `api/media.ts`, `package.json` | **Vercel** | Interface, YouTube metadata, conversion requests, job progress, issuing download tickets |
+| Media Worker | `media-worker/` | **Render / Docker VPS** | yt-dlp, FFmpeg, verified MP3/MP4, file storage |
+| Render blueprint | `render.yaml` | **Render** | Deploys media-worker automatically from same GitHub repository |
 
-## Important demonstration limits
+**Important:** One *repository/ZIP* does not mean one process or one hosting service. **Vercel cannot run the persistent Docker worker from the root website deployment.** The worker needs its own Docker host with persistent disk. A public/HTTPS worker URL and matching token must be entered in Vercel before the converter can connect.
 
-- The watch collection, reference codes and material specifications are fictional concepts. Do not present them as manufactured product claims.
-- The contact form **does not send email**. It prepares a brief for manual copy/sharing.
-- Automated browser-based visual QA may be restricted by local security policy; verify WebGL behavior and mobile scroll on your deployed Vercel URL before treating it as production-ready.
+## 2. Upload ONE ZIP to GitHub (99 files, not the .zip itself)
+
+1. Extract `AUDIXO-V57-ONE-REPO-99-FILES.zip`.
+2. Open your existing AUDIXO repository on GitHub → **Add file → Upload files**.
+3. Drag the **contents of the extracted directory**, with subfolders intact, not the ZIP itself. Do not create a second nested repository folder.
+4. Commit. All 99 files are in one source tree, including `render.yaml` at the root.
+5. If this repository already contains obsolete V56 files not in this package, GitHub's web upload **does not delete** them. Remove stale paths listed under the clean-up notes below, or use Git to synchronize the repository. Do not delete unrelated files blindly.
+
+The 99-file count is a constraint for one browser upload, **not** a GitHub repository-wide maximum.
+
+## 3. Deploy the Docker worker FIRST (simple Render blueprint path)
+
+> Render's Standard instance + persistent disk is a paid resource; verify costs before provisioning. For lighter workloads you can choose another persistent Docker host instead.
+
+1. Visit [Render](https://dashboard.render.com/), open **New → Blueprint**, and connect your existing AUDIXO GitHub repository.
+2. Select the `render.yaml` Blueprint. It creates an `audixo-media-worker` web service using `media-worker/Dockerfile`, an HTTPS host, a persistent `/app/data` disk, and a public `/live` health check.
+3. Render generates private `AUDIXO_WORKER_TOKEN` and `AUDIXO_ADMIN_TOKEN` values independently. **Do not paste either in GitHub, the browser app, a screenshot, or chat.** In Render's service environment settings, securely copy/reveal the **WORKER** token for Vercel (only). Keep the separate **ADMIN** token for the cookie setup page.
+4. When deployed, copy the HTTPS service origin, for example `https://audixo-media-worker.onrender.com`. The actual hostname is whatever Render provides you. Visiting `<YOUR-WORKER-URL>/live` should return `{"ok":true,"service":"audixo-media-worker"}`. (No secrets are returned.)
+
+Alternate Docker VPS deployment: create `media-worker/.env` locally using `media-worker/.env.example`, fill two **different** 32+ character secrets, and run:
+
+```bash
+docker build -t audixo-media-worker ./media-worker
+docker volume create audixo-private-data
+docker run -d --name audixo-media-worker --restart unless-stopped \
+  --env-file media-worker/.env \
+  -v audixo-private-data:/app/data -p 8080:8080 audixo-media-worker
+```
+
+Place a **trusted HTTPS reverse proxy** in front of VPS port 8080. Never expose cookies or worker tokens in GitHub.
+
+## 4. Configure Vercel (same GitHub repository)
+
+Keep the Vercel project's **Root Directory** set to repository root, NOT `media-worker/`:
+
+| Setting | Value |
+| --- | --- |
+| Framework Preset | Vite |
+| Install Command | `npm ci` |
+| Build Command | `npm run build` |
+| Output Directory | `dist` |
+| Node | 22.x |
+
+In Vercel → Project → Settings → Environment Variables add:
+
+```text
+AUDIXO_WORKER_URL=https://YOUR-RENDER-SERVICE.onrender.com
+AUDIXO_WORKER_TOKEN=THE_EXACT_SAME_WORKER_TOKEN_GENERATED_ON_RENDER
+VITE_SITE_URL=https://audixo.vercel.app
+```
+
+The example hostname must be replaced with your **real** worker URL. Use the token **only** in `AUDIXO_WORKER_TOKEN` (without `VITE_` prefix). Set Vercel variables for Production; include Preview only if you intend to enable preview deployments. Redeploy the website so server-side environment changes take effect. The converter now shows a single clear status message and a **Retry connection** button; when configured correctly it shows **Media worker connected**.
+
+Remove unused legacy `AUDIXO_YTDL_BASE_URL`, `AUDIXO_YTDL_AUTH_TOKEN`, `AUDIXO_YTDL_AUTH_SCHEME`, and `AUDIXO_YTDL_COOKIE` variables. This project does **not** use a paid or external YTDL API.
+
+## 5. Optional: YouTube-only cookies (PRIVATE — NOT IN THIS ZIP)
+
+**Do not commit or upload the provided `cookies(1).txt` to GitHub.** The file you supplied contains active Google, YouTube, and unrelated sites' authentication/session tokens (not just YouTube). The original file must not be used directly as a public worker environment file. Because it was shared, revoke/refresh affected login sessions and generate a new YouTube-only cookie export.
+
+For videos you own or are authorized to download, try public access **without cookies first**. If YouTube specifically requires login and you have rights to access the video:
+
+1. Export a **fresh** Netscape-format `cookies.txt` from an account/session you are authorized to use. Avoid browser-wide exports; a separate account or session is safer.
+2. Locally open `media-worker/tools/youtube-cookie-only-helper.html` in a browser and select the new export. It creates a filtered YouTube-only file **without uploading it anywhere**.
+3. Visit `https://YOUR-ACTUAL-WORKER-URL/admin` in your browser (HTTPS required). Enter the separate `AUDIXO_ADMIN_TOKEN` from Render; choose the filtered local file; click **Install Private Cookies**.
+4. The worker validates hostnames and saves the private file only on its persistent volume with file mode 0600. It is never served to clients or stored in the GitHub repository.
+
+**Important:** Cookies expire, YouTube may block datacenter IPs, and login does not guarantee that a source is accessible. Do not expose a personal authenticated YouTube session to untrusted public traffic; consider keeping cookie mode disabled for a publicly accessible downloader.
+
+## 6. End-to-end download workflow (V57 fix)
+
+`Browser → Vercel /api/media (private proxy) → Docker worker` for preview, conversion, and status.
+
+When ready:
+
+1. Worker verifies output MP3 bitrate or exact MP4 resolution with FFprobe.
+2. Browser requests a one-time signed download ticket from the Vercel proxy.
+3. Browser downloads the **file directly from the worker HTTPS domain**, bypassing the Vercel Function's 4.5 MB response-payload limit.
+4. Ticket expires in **2 minutes**, cannot expose the master token, and each job is downloadable only once. The worker deletes delivered output files.
+
+This change is essential for multi-megabyte MP3/MP4 files. The older V56 method streamed the entire output through a Vercel Function.
+
+## 7. Test / troubleshoot
+
+Worker tests use generated synthetic audio/video and a mock yt-dlp executable, **not** Google cookies or external YouTube downloads.
+
+```bash
+npm ci
+npm run typecheck
+npm run test:converter
+npm run test:tracks
+npm run build
+cd media-worker
+npm test
+```
+
+Health check: `<worker HTTPS URL>/live` (public). Use the **AUDIXO converter connection banner** on the Vercel site to verify authenticated Vercel-to-worker requests. A public `/live` check alone does not prove Vercel credentials are correct.
+
+| UI condition | Likely issue | Action |
+| --- | --- | --- |
+| Worker setup required | Vercel env missing | Configure the Render worker and both Vercel vars, then redeploy |
+| Worker unreachable | Host asleep/down, DNS, TLS, URL mismatch | Inspect Render service and `/live` |
+| Worker rejected authentication | Tokens differ | Set identical private WORKER tokens on Render and Vercel |
+| YouTube access rejected | Source block/login/expired cookies | Test rights/availability, update yt-dlp or refresh authorized session |
+| Requested MP4 unavailable | Exact source resolution missing | Analyze again and choose from real source qualities |
+| Download doesn't start | Browser blocked automatic download or worker unavailable | Use the 2-minute manual link if not yet consumed; otherwise retry with a new conversion |
+
+**Verification limits:** An offline local test cannot prove that live YouTube source access or your hosted worker networking succeeds. Only a successful test with an authorized video on the deployed Render/Vercel setup can confirm end-to-end production operation.
+
+## 8. Existing V56 repository clean-up
+
+These obsolete files were consolidated/removed in the previous V56 112→99 merge. If they remain in your **existing GitHub repository**, delete them only after checking that no other local custom code references them:
+
+`src/styles/ax39.css`, `src/styles/ax40.css`, `src/pages/EchoTool.tsx`, `src/pages/SlowedReverbTool.tsx`, `src/pages/PitchTool.tsx`, `src/pages/SpatialTool.tsx`, `src/pages/Privacy.tsx`, `src/pages/Copyright.tsx`, `src/pages/NotFound.tsx`, `src/editor/StudioDisc.tsx`, `media-worker/.gitignore`, `media-worker/tests/integration.test.mjs`, `media-worker/README.md`.
+
+**V57:** `media-worker/docker-compose.yml` is intentionally replaced by the root `render.yaml` to stay within 99 files. The optional manual Docker commands above still work. Website/editor/track assets remain as in V56.
+
+Use only audio/video that you own or are legally permitted to download and transform. Respect platform rules and rights holders.
